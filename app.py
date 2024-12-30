@@ -128,5 +128,5 @@ if __name__ == '__main__':
     fetch_videos_in_background(playlist_urls)
 
     # Flask 서버 실행
-    print("Starting Flask server...")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    from os import environ
+    app.run(host='0.0.0.0', port=int(environ.get('PORT', 5000)))
