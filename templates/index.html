@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>잠뜰TV 영상 추천</title>
+</head>
+<body>
+    <h1>잠뜰TV 영상 추천</h1>
+    <button onclick="getRecommendation()">추천 영상 보기</button>
+    <div id="video"></div>
+
+    <script>
+        async function getRecommendation() {
+            try {
+                const response = await fetch('/recommend');
+                if (!response.ok) {
+                    throw new Error('조건에 맞는 영상을 찾을 수 없습니다.');
+                }
+                const data = await response.json();
+                document.getElementById('video').innerHTML = `
+                    <h3>${data.title}</h3>
+                    <img src="${data.thumbnail}" alt="${data.title}" style="width:300px; height:auto;">
+                    <br>
+                    <a href="${data.url}" target="_blank">영상 보러가기</a>
+                `;
+            } catch (error) {
+                document.getElementById('video').innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
